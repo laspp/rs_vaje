@@ -169,7 +169,7 @@ Please refer to the official [gem5 installation guide](https://www.gem5.org/docu
 After we have build the gem5, we can run the simulation using the following command:
 
 ```bash
-$GEM5/build/X86/gem5.opt --outdir=hello_stats hello_world.py 
+$GEM5/build/ALL/gem5.opt --outdir=hello_stats hello_world.py 
 ```
 
 where `outdir` is the directory where the simulation statistics will be stored and `hello_world.py` is the script that we have created in the previous section.
