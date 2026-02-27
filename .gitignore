@@ -43,3 +43,5 @@ build/
 moesi_two_level.py
 04-GEM5-RCC/utils/
 bin/
+*_log/
+*.code-worspace
