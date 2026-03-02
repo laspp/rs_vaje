@@ -210,8 +210,7 @@ To use m5 stats, we need to compile the code with the `GEM5` flag defined, and i
 
 Using grep to find the specific metrics in the stats.txt file:
 ```bash
-grep -ri "simSeconds" ./stats.txt && grep -ri "numCycles" ./stats.txt && grep -ri "cpi" ./stats.txt && grep -
-ri "numCycles" ./stats.txt 
+grep -ri "simSeconds" ./stats.txt && grep -ri "numCycles" ./stats.txt && grep -ri "cpi" ./stats.txt && grep -ri "numCycles" ./stats.txt 
 ```
 
 

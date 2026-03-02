@@ -85,8 +85,6 @@ class MinorCustomFloatDiv(MinorFU):
 class MyCustomFUPool(MinorFUPool):
             funcUnits = [
                 MinorDefaultIntFU(), # default integer ALU
-                MinorDefaultIntFU(), # default integer ALU
-                MinorDefaultIntMulFU(), # default integer multiplier
                 MinorDefaultIntMulFU(), # default integer multiplier
                 MinorDefaultIntDivFU(),  # default integer divider
                 MinorCustomFloatALU(), # custom floating-point ALU
@@ -120,7 +118,7 @@ class MyCustomFUPool(MinorFUPool):
 # address calculation
 INTEGER_ALU_LATENCY = 1
 INTEGER_MUL_LATENCY = 3
-INTEGER_DIV_LATENCY = 1
+INTEGER_DIV_LATENCY = 3
 FLOAT_ALU_LATENCY = 3
 FLOAT_MUL_LATENCY = 5
 FLOAT_DIV_LATENCY = 5
@@ -198,21 +196,22 @@ class InOrdCPUCore(RiscvMinorCPU):
         
 
         # The parameter opLat is the latency of the functional unit, i.e., the number of cycles it takes for the
-        #self.executeFuncUnits.funcUnits[0].opLat = INTEGER_ALU_LATENCY
-        #self.executeFuncUnits.funcUnits[1].opLat = INTEGER_MUL_LATENCY
-        #self.executeFuncUnits.funcUnits[2].opLat = INTEGER_DIV_LATENCY
-        #self.executeFuncUnits.funcUnits[3].opLat = FLOAT_ALU_LATENCY
-        #self.executeFuncUnits.funcUnits[4].opLat = FLOAT_MUL_LATENCY
-        #self.executeFuncUnits.funcUnits[5].opLat = FLOAT_DIV_LATENCY
-        #self.executeFuncUnits.funcUnits[6].opLat = INTEGER_ALU_LATENCY # Memory access latency is the same as integer ALU latency
         self.executeFuncUnits.funcUnits[0].opLat = INTEGER_ALU_LATENCY
-        self.executeFuncUnits.funcUnits[1].opLat = INTEGER_ALU_LATENCY
-        self.executeFuncUnits.funcUnits[2].opLat = INTEGER_MUL_LATENCY
-        self.executeFuncUnits.funcUnits[3].opLat = INTEGER_MUL_LATENCY
-        self.executeFuncUnits.funcUnits[4].opLat = FLOAT_ALU_LATENCY
-        self.executeFuncUnits.funcUnits[5].opLat = FLOAT_MUL_LATENCY
-        self.executeFuncUnits.funcUnits[6].opLat = FLOAT_DIV_LATENCY
-        self.executeFuncUnits.funcUnits[7].opLat = INTEGER_ALU_LATENCY
+        self.executeFuncUnits.funcUnits[1].opLat = INTEGER_MUL_LATENCY
+        self.executeFuncUnits.funcUnits[2].opLat = INTEGER_DIV_LATENCY
+        self.executeFuncUnits.funcUnits[3].opLat = FLOAT_ALU_LATENCY
+        self.executeFuncUnits.funcUnits[4].opLat = FLOAT_MUL_LATENCY
+        self.executeFuncUnits.funcUnits[5].opLat = FLOAT_DIV_LATENCY
+        self.executeFuncUnits.funcUnits[6].opLat = INTEGER_ALU_LATENCY # Memory access latency is the same as integer ALU latency
+        #self.executeFuncUnits.funcUnits[0].opLat = INTEGER_ALU_LATENCY
+        #self.executeFuncUnits.funcUnits[1].opLat = INTEGER_ALU_LATENCY
+        #self.executeFuncUnits.funcUnits[2].opLat = INTEGER_MUL_LATENCY
+        #self.executeFuncUnits.funcUnits[3].opLat = INTEGER_MUL_LATENCY
+        #self.executeFuncUnits.funcUnits[4].opLat = INTEGER_MUL_LATENCY
+        #self.executeFuncUnits.funcUnits[5].opLat = FLOAT_ALU_LATENCY
+        #self.executeFuncUnits.funcUnits[6].opLat = FLOAT_MUL_LATENCY
+        #self.executeFuncUnits.funcUnits[7].opLat = FLOAT_DIV_LATENCY
+        #self.executeFuncUnits.funcUnits[8].opLat = INTEGER_ALU_LATENCY
         # The parameter issueLat controls the issue latency of the functional unit, i.e., the number of cycles
         # until another instruction can be issued to the functional unit after an instruction has already been issued.
         self.executeFuncUnits.funcUnits[0].issueLat = INTEGER_ALU_ISSUE_LATENCY
@@ -224,35 +223,18 @@ class InOrdCPUCore(RiscvMinorCPU):
         self.executeFuncUnits.funcUnits[6].issueLat = INTEGER_ALU_ISSUE_LATENCY # Memory access issue latency is the same as integer ALU issue latency
 
 
-
         # The parameter cantForwardFromFUIndices specifies the indices of the functional units from which the
         # functional unit cannot forward results.
-        """
-        self.executeFuncUnits.funcUnits[5].cantForwardFromFUIndices = [3, 4]
-        self.executeFuncUnits.funcUnits[5].timings[0].srcRegsRelativeLats = [
-            0
-        ]
-        self.executeFuncUnits.funcUnits[5].timings[0].extraAssumedLat = 1
-        self.executeFuncUnits.funcUnits[4].cantForwardFromFUIndices = [3, 5]
-        self.executeFuncUnits.funcUnits[4].timings[0].srcRegsRelativeLats = [
-            0
-        ]
-
-        self.executeFuncUnits.funcUnits[3].cantForwardFromFUIndices = [4, 5]
-        #self.executeFuncUnits.funcUnits[3].timings[0].srcRegsRelativeLats = [
-        #    0
-        #]
-        """
 
         # Pipeline configuration parameters
         # The number of instructions that can be sent to the execute stage per cycle
-        self.executeInputWidth = 4
+        self.executeInputWidth = 1
         # The number of instructions that can be buffered between the issue and execute stages
-        self.executeInputBufferSize = 4 
+        self.executeInputBufferSize = 1 
         # The number of instructions that can be buffered between the decode and issue stages
-        self.decodeInputBufferSize = 1 
+        self.decodeInputBufferSize = 1
         # Issue limits for instruction dispatch
-        self.executeIssueLimit = 4
+        self.executeIssueLimit = 1
         self.executeMemoryIssueLimit = 1
         
         # Pipeline stage delays

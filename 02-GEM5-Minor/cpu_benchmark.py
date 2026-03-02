@@ -19,8 +19,11 @@ memory = SingleChannelDDR3_1600("7GiB")
 # By default, use Atomic CPU
 #cpu_type = CPUTypes.ATOMIC
 
+
 # Uncomment for Timing CPU
-#cpu_type = CPUTypes.TIMING
+cpu_type = CPUTypes.TIMING
+
+#processor = SimpleProcessor(cpu_type=cpu_type, num_cores=1, isa=ISA.RISCV)
 
 #Source code for simple processor gem5/src/python/gem5/components/processors/simple_processor.py
 processor = RiscV_InOrder_CPU()
