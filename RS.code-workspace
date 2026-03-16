@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "03-GEM5-O3",
+			"path": "03-GEM5-O3"
+		},
+		{
+			"name": "02-GEM5-Minor",
+			"path": "02-GEM5-Minor"
+		},
+		{
+			"name": "01-GEM5-CPU",
+			"path": "../rs-vaje/01-GEM5-CPU"
+		}
+	],
+	"settings": {}
+}

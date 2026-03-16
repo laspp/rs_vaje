@@ -27,10 +27,11 @@ int main(void) {
     volatile uint64_t b0 = 5, b1 = 6, b2 = 7, b3 = 8;
     volatile uint64_t r0, r1, r2, r3;
 
+    
     #ifdef GEM5
         m5_reset_stats(0, 0);
     #endif
-
+    
     for (int i = 0; i < ITERATIONS; i++) {
         /*
          * All four additions are FULLY INDEPENDENT of each other.

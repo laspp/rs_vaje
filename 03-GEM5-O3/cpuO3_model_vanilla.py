@@ -146,7 +146,7 @@ class O3CPUCore(RiscvO3CPU):
         # ****************************
         # - RENAME STAGE
         # ****************************
-        self.numROBEntries = 32
+        self.numROBEntries = 128
         self.numPhysIntRegs = 80
         self.numPhysFloatRegs = 64
         self.renameWidth = 4
@@ -202,11 +202,11 @@ class O3CPUCore(RiscvO3CPU):
 
         class CPU_ReadPort(ReadPort):
             opList = [OpDesc(opClass="MemRead", opLat=1), OpDesc(opClass="FloatMemRead", opLat=1)]
-            count = 1
+            count = 2
 
         class CPU_WritePort(WritePort):
             opList = [OpDesc(opClass="MemWrite", opLat=1), OpDesc(opClass="FloatMemWrite", opLat=1)]
-            count = 1
+            count = 2
 
 
         

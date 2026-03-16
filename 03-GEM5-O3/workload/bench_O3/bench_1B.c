@@ -28,6 +28,7 @@ int main(void) {
     #ifdef GEM5
         m5_reset_stats(0, 0);
     #endif
+
     for (int i = 0; i < ITERATIONS; i++) {
         /*
          * TRUE DEPENDENCY CHAIN: each operation consumes
@@ -52,7 +53,7 @@ int main(void) {
     sink = val;
 
     #ifdef GEM5
-        m5_reset_stats(0, 0);
+        m5_dump_stats(0, 0);
     #endif
 
     return 0;

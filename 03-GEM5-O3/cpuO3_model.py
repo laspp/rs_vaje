@@ -124,16 +124,15 @@ class O3CPUCore(RiscvO3CPU):
         # -- BPU SELECTION
         # ****************************
         # predictors from src/cpu/pred/BranchPredictor.py
-        #self.branchPred = BranchPredictor(conditionalBranchPred=LTAGE(numThreads=self.numThreads))
         #self.branchPred = BranchPredictor(conditionalBranchPred=LocalBP(numThreads=self.numThreads))
-        self.branchPred = BranchPredictor(conditionalBranchPred=MultiperspectivePerceptronTAGE64KB(numThreads=self.numThreads))
+        self.branchPred = BranchPredictor(conditionalBranchPred=LTAGE(numThreads=self.numThreads))
+        #self.branchPred = BranchPredictor(conditionalBranchPred=MultiperspectivePerceptronTAGE64KB(numThreads=self.numThreads))
 
-                
-
+        
         # ****************************
         # - FETCH STAGE
         # ****************************
-        self.fetchWidth = 2 # number of instructions fetched per cycle
+        self.fetchWidth = 4 # number of instructions fetched per cycle
         self.fetchBufferSize = 16
         self.fetchQueueSize = 32 
         self.smtNumFetchingThreads = 1
@@ -142,15 +141,16 @@ class O3CPUCore(RiscvO3CPU):
         # ****************************
         # - DECODE STAGE
         # ****************************
-        self.decodeWidth = 2
+        self.decodeWidth = 4
         # possible values "Dynamic", "Partitioned", "Threshold"
         self.smtROBPolicy = "Partitioned"
         self.smtROBThreshold = 100 
+        
 
         # ****************************
         # - RENAME STAGE
         # ****************************
-        self.numROBEntries = 32
+        self.numROBEntries = 128
         self.numPhysIntRegs = 80
         self.numPhysFloatRegs = 64
         self.renameWidth = 4
@@ -162,8 +162,8 @@ class O3CPUCore(RiscvO3CPU):
         # ****************************
         # - DISPATCH/ISSUE STAGE
         # ****************************
-        self.dispatchWidth = 2
-        self.issueWidth = 2
+        self.dispatchWidth = 4
+        self.issueWidth = 4
         
         # ****************************
         # - EXECUTE STAGE
@@ -176,14 +176,14 @@ class O3CPUCore(RiscvO3CPU):
             opList = [
                 OpDesc(opClass="IntAlu", opLat=1, pipelined=False)
             ]
-            count = 1
+            count = 2
 
         class CPU_IntMultDiv(FUDesc):
             opList = [
                 OpDesc(opClass="IntMult", opLat=3, pipelined=False),
                 OpDesc(opClass="IntDiv", opLat=8, pipelined=False)
             ]
-            count = 1
+            count = 2
 
         class CPU_FP_ALU(FP_ALU):
             opList = [
@@ -206,11 +206,11 @@ class O3CPUCore(RiscvO3CPU):
 
         class CPU_ReadPort(ReadPort):
             opList = [OpDesc(opClass="MemRead", opLat=1), OpDesc(opClass="FloatMemRead", opLat=1)]
-            count = 1
+            count = 2
 
         class CPU_WritePort(WritePort):
             opList = [OpDesc(opClass="MemWrite", opLat=1), OpDesc(opClass="FloatMemWrite", opLat=1)]
-            count = 1
+            count = 2
 
 
         
@@ -232,7 +232,7 @@ class O3CPUCore(RiscvO3CPU):
         # ****************************
         # - WRITE/Memory STAGE
         # ****************************
-        self.wbWidth = 2
+        self.wbWidth = 4
         self.LQEntries = 32
         self.SQEntries = 32
         # Number of places to shift addr before check
@@ -251,8 +251,8 @@ class O3CPUCore(RiscvO3CPU):
         # ****************************
         # - COMMIT STAGE
         # ****************************
-        self.commitWidth = 2
-        self.squashWidth = 2
+        self.commitWidth = 4
+        self.squashWidth = 4
         # Time buffer size for backwards 
         self.backComSize = 10
         # Time buffer size for forward communication

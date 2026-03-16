@@ -29,6 +29,7 @@
 
 #define N 256
 #define ITERATIONS 200
+//#define VERSION_GOOD 1
 
 volatile uint64_t sink;
 
@@ -45,20 +46,6 @@ int main(void) {
     #endif
     for (int iter = 0; iter < ITERATIONS; iter++) {
         for (int i = 0; i < N; i++) {
-
-#ifdef VERSION_GOOD
-            /*
-             * GOOD: issue the load, then do independent arithmetic
-             * on 'side' (unrelated to the load result) while the
-             * cache access completes. O3 overlaps the load with
-             * the side computation.
-             */
-            volatile uint64_t loaded = arr[i];          /* load issued */
-            side = side * 6364136223846793005ULL + 1442695040888963407ULL; /* independent work */
-            side = side ^ (side >> 33);
-            acc += loaded;                     /* use load result only here */
-
-#else  /* VERSION_BAD */
             /*
              * BAD: every operation immediately depends on the load.
              * O3 cannot overlap anything — it must wait for the
@@ -68,7 +55,7 @@ int main(void) {
             acc += loaded;                     /* immediately depends on load */
             acc ^= (acc >> 17);                /* depends on acc from load */
             acc *= 3;                          /* depends on acc above */
-#endif
+
         }
     }
 
