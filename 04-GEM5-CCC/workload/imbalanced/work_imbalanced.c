@@ -17,7 +17,7 @@ int main() {
     m5_work_begin(0, 0);
     #endif
 
-    #pragma omp parallel for schedule(dynamic) 
+    #pragma omp parallel for schedule(dynamic,16) 
     for (int i = 0; i < N; i++) {
         /* Iteration i does O(i) work — later iterations are much heavier */
         double val = 0.0;
@@ -25,7 +25,7 @@ int main() {
             val += sqrt((double)(i * j + 1));
         }
         result[i] = val;
-    }s
+    }
     #ifdef GEM5
     // m5_work_end(work_id, thread_id) -- end the item sample
     m5_work_end(0, 0);
