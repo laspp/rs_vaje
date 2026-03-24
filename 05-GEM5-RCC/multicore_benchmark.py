@@ -49,10 +49,12 @@ board = SimpleBoard(
 
 
 
-binary = CustomResource("./workload/vec_add/vec_add.bin")
+#binary = CustomResource("./workload/vec_add/vec_add.bin")
+#binary = CustomResource("./workload/false_sharing/pi_false_sharing.bin")
+#binary = CustomResource("./workload/false_sharing/pi_optimized.bin")
 #binary = CustomResource("./workload/matrix_multiply/mat_mult.bin")
-#binary = CustomResource("./workload/histogram_opt/histogram_opt.bin")
 #binary = CustomResource("./workload/histogram_naive/histogram_naive.bin")
+#binary = CustomResource("./workload/histogram_opt/histogram_opt.bin")
 
 board.set_se_binary_workload(binary)
 

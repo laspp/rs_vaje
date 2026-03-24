@@ -4,7 +4,8 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --ntasks=1
 #SBATCH --time=00:30:00
-#SBATCH --reservation=fri 
+
+##SBATCH --reservation=fri 
 
 GEM5_WORKSPACE=/d/hpc/projects/FRI/GEM5/gem5_workspace
 GEM5_ROOT=$GEM5_WORKSPACE/gem5
