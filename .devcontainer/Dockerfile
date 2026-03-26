@@ -25,7 +25,7 @@ RUN ln -s /gem5/build/RISCV/gem5.opt /usr/bin/gem5
 # more compatibility stuff (original scripts are made for hpc)
 # so we made some links and dummy passthrough commands to keep them working
 
-RUN ls - s /gem5/build/RISCV /gem5/build/RISCV_ALL_RUBY
+RUN ln -s /gem5/build/RISCV /gem5/build/RISCV_ALL_RUBY
 
 RUN mkdir -p /d/hpc/projects/FRI/GEM5/gem5_workspace && ln -s /gem5 /d/hpc/projects/FRI/GEM5/gem5_workspace
 
