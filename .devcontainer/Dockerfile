@@ -2,8 +2,9 @@ FROM ubuntu:latest
 
 # GEM5
 RUN apt update \
-    && apt install -y git build-essential m4 scons python3-dev zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python3 python-is-python3
+    && apt install -y git build-essential m4 scons python3-dev zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python3 python-is-python3 python3-pydot
 RUN git clone https://github.com/gem5/gem5
+RUN printf 'RUBY=y\nUSE_MULTIPLE_PROTOCOLS=y\nPROTOCOL="MULTIPLE"\nRUBY_PROTOCOL_MOESI_AMD_Base=y\nRUBY_PROTOCOL_MESI_Two_Level=y\nRUBY_PROTOCOL_MESI_Three_Level=y\nRUBY_PROTOCOL_MESI_Three_Level_HTM=y\nRUBY_PROTOCOL_MI_example=y\nRUBY_PROTOCOL_MOESI_CMP_directory=y\nRUBY_PROTOCOL_MOESI_CMP_token=y\nRUBY_PROTOCOL_MOESI_hammer=y\nRUBY_PROTOCOL_Garnet_standalone=y\nRUBY_PROTOCOL_CHI=y\nRUBY_PROTOCOL_MSI=y\nBUILD_ISA=y\nUSE_RISCV_ISA=y' > /gem5/build_opts/RISCV
 RUN cd gem5 && scons build/RISCV/gem5.opt -j $(nproc)
 
 ENV GEM5_ROOT=/gem5
@@ -23,6 +24,8 @@ RUN ln -s /gem5/build/RISCV/gem5.opt /usr/bin/gem5
 
 # more compatibility stuff (original scripts are made for hpc)
 # so we made some links and dummy passthrough commands to keep them working
+
+RUN ls - s /gem5/build/RISCV /gem5/build/RISCV_ALL_RUBY
 
 RUN mkdir -p /d/hpc/projects/FRI/GEM5/gem5_workspace && ln -s /gem5 /d/hpc/projects/FRI/GEM5/gem5_workspace
 
