@@ -11,5 +11,7 @@ GEM5_WORKSPACE=/d/hpc/projects/FRI/GEM5/gem5_workspace
 GEM5_ROOT=$GEM5_WORKSPACE/gem5
 GEM5_PATH=$GEM5_ROOT/build/RISCV_ALL_RUBY
 
-srun apptainer exec $GEM5_WORKSPACE/gem5_rv.sif $GEM5_PATH/gem5.opt --outdir=multi_core_imbalanced multicore_benchmark.py
-#srun apptainer exec $GEM5_PATH/gem5_rv.opt --outdir=multi_core_balanced multicore_benchmark.py
+srun apptainer exec $GEM5_WORKSPACE/gem5_rv.sif $GEM5_PATH/gem5.opt --help | grep -i vlen
+
+
+srun apptainer exec $GEM5_WORKSPACE/gem5_rv.sif $GEM5_PATH/gem5.opt --outdir=vector_bench cpu_benchmark.py
