@@ -1,0 +1,4 @@
+{
+	"name": "Ubuntu",
+	"image": "ghcr.io/schtrudl/gem5:latest"
+}

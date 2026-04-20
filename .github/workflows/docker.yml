@@ -1,0 +1,26 @@
+name: Publish Docker images
+
+on:
+    workflow_dispatch:
+
+# You may need to go to Repo Settings > Actions > General > Workflow permissions and select Read and Write permissions
+permissions:
+    packages: write
+
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v4
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v7
+              with:
+                  file: ./.devcontainer/Dockerfile
+                  push: true
+                  tags: ghcr.io/${{ github.repository_owner }}/gem5:latest
